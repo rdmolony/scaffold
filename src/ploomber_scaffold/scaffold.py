@@ -209,14 +209,14 @@ def cli(project_path, package=False, conda=False, empty=False):
             shutil.rmtree(pkg_root / 'tasks')
             shutil.rmtree(pkg_root / 'scripts')
 
-            path_to_empty = _resources_path('simple')
+            path_to_empty = _resources_path('empty')
             shutil.copy(path_to_empty / 'package.yaml', path_pipeline)
 
         else:
             shutil.rmtree(project_path / 'tasks')
             shutil.rmtree(project_path / 'scripts')
 
-            path_to_empty = _resources_path('simple')
+            path_to_empty = _resources_path('empty')
             shutil.copy(path_to_empty / 'no-package.yaml', path_pipeline)
 
     click.secho(f'\nDone. Pipeline declaration: {path_pipeline!s}\n',
