@@ -22,8 +22,16 @@ from jinja2 import Template
 def copy_template(path, package, conda):
     """Copy template files to path
     """
-    with resources.path(ploomber_scaffold, 'template') as path_to_template:
-        shutil.copytree(path_to_template, path)
+    try:
+        with resources.path(ploomber_scaffold, 'template') as p:
+            path_to_template = p
+    # this will happen in python >= 3.9
+    # https://www.mail-archive.com/python-bugs-list@python.org/msg451088.html
+    except IsADirectoryError:
+        with resources.files(ploomber_scaffold) as p:
+            path_to_template = p / 'template'
+
+    shutil.copytree(path_to_template, path)
 
     path_to_readme = (path / 'README.md')
     readme = Template(path_to_readme.read_text()).render(package=package,
